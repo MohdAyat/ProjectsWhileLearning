@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Assignment regarding API Request(XML)</h1>
+    <button id="b">Show Hitesh Sir</button>
+</body>
+<script>
+    const requestUrl = 'https://api.github.com/users/hiteshchoudhary'
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', requestUrl);
+    // console.log('ayat');
+    let data;
+    let sirImg;
+    let followerCount;
+    xhr.onreadystatechange = function(){
+        console.log(xhr.readyState)
+        if(xhr.readyState===4){
+            data = JSON.parse(xhr.responseText)
+            // console.log(data);
+            sirImg = data.avatar_url
+            // console.log(sirImg);
+            followerCount = data.followers
+        }
+    }
+    xhr.send()
+    document.querySelector('#b').addEventListener('click',(e)=>{
+        document.body.innerHTML += `
+            <article style ='display: grid;grid-template-rows: max-content 200px 1fr;' class="card">
+                <header>
+                    <h2>Hitesh sir</h2>
+                </header>
+                <img style='object-fit: cover;width: 50%;height: 100%;' src="${sirImg}" alt="Hot air balloons">
+                <div class="content">
+                    <p> Followers : ${followerCount} </p>
+                </div>
+            </article>`;
+    })
+</script>
+</html>
